@@ -1,0 +1,7 @@
+{
+  "name": "Lenda Technologies",
+  "description": "Modern lending management solutions website for Lenda Technologies.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
