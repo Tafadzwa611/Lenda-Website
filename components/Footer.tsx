@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Mail, Phone, MapPin, ShieldCheck, Lock } from 'lucide-react';
 
@@ -10,6 +9,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const currentYear = new Date().getFullYear();
   
   const handleLinkClick = (view: 'home' | 'about' | 'contact' | 'quote' | 'admin' | 'core-banking' | 'ssb' | 'custom' | 'chatbots' | 'integration' | 'blog', e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,7 +43,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div>
             <img src={LOGO_DARK_THEME} alt="Lenda Logo" className="h-10 mb-6" />
             <p className="text-slate-300 text-sm leading-relaxed mb-6">
-              Alpha-Lend Solutions is a leading technology partner for Zimbabwe’s financial sector. We provide robust, locally compliant software solutions designed to streamline operations and ensure regulatory compliance for Microfinance Institutions.
+              Lenda Technologies is a leading technology partner for Africa's financial sector. We provide robust, locally compliant software solutions designed to streamline operations and ensure regulatory compliance for Microfinance Institutions.
             </p>
           </div>
 
@@ -54,9 +54,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li><a href="#" onClick={(e) => handleLinkClick('core-banking', e)} className="hover:text-sky-400 transition-colors">Loan Management Systems</a></li>
               <li><a href="#" onClick={(e) => handleLinkClick('ssb', e)} className="hover:text-sky-400 transition-colors">SSB Deductions Platform</a></li>
               <li><a href="#" onClick={(e) => handleLinkClick('custom', e)} className="hover:text-sky-400 transition-colors">Custom Software Development</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('integration', e)} className="hover:text-sky-400 transition-colors">System Integration & API</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('custom', e)} className="hover:text-sky-400 transition-colors">AI Chatbots & Integration</a></li>
               <li><a href="#" onClick={(e) => handleLinkClick('custom', e)} className="hover:text-sky-400 transition-colors">Corporate Website Development</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('chatbots', e)} className="hover:text-sky-400 transition-colors">AI Chatbots</a></li>
             </ul>
           </div>
 
@@ -107,7 +106,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         {/* Bottom Bar */}
         <div className="border-t border-slate-700/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
-          <p>© 2024 Alpha-Lend Solutions (Pvt) Ltd. All Rights Reserved.</p>
+          <p>© {currentYear} Lenda Technologies (Pvt) Ltd. All Rights Reserved.</p>
           
           <div className="flex flex-wrap justify-center gap-4 md:gap-6 items-center">
              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>

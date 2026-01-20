@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronDown, ChevronUp, Briefcase, CreditCard, Code, Bot, Settings, Home, Users, BookOpen, MessageSquare, Zap, Shield, Globe, Check } from 'lucide-react';
 import { Button } from './Button';
@@ -23,20 +22,8 @@ const products = [
   { 
     id: "custom",
     title: "Custom Software", 
-    desc: "Tailor-made solutions to meet specific needs.",
+    desc: "Tailor-made solutions including AI Chatbots and System Integrations.",
     icon: <Code size={20} />,
-  },
-  { 
-    id: "chatbots",
-    title: "Chatbots", 
-    desc: "Automated digital assistants for WhatsApp & Web.",
-    icon: <Bot size={20} />,
-  },
-  { 
-    id: "integration",
-    title: "Integration", 
-    desc: "Seamlessly connect your existing systems.",
-    icon: <Settings size={20} />,
   }
 ];
 
@@ -47,7 +34,7 @@ const SLIDES = [
     title: "Core Banking Engine",
     subtitle: "Complete Automation",
     icon: <Zap className="text-purple-400" size={24} />,
-    features: ["Multi-Currency (ZiG/USD)", "Real-time Accounting", "RBZ Regulatory Reports"]
+    features: ["Multi-Currency (Pan-African Support)", "Real-time Accounting", "Regulatory Compliance Reports"]
   },
   {
     id: 2,

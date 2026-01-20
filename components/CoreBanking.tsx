@@ -1,12 +1,76 @@
-
 import React from 'react';
-import { ShieldCheck, Users, FileText, PieChart, Building2, Landmark, Database, Cloud, Lock, CheckCircle, ArrowRight, Download } from 'lucide-react';
+import { ShieldCheck, Users, FileText, PieChart, Building2, Landmark, Database, Cloud, Lock, CheckCircle, ArrowRight, Download, Globe, Mail, Phone, MapPin } from 'lucide-react';
 
 interface CoreBankingProps {
   onNavigate: (view: 'home' | 'about' | 'contact' | 'quote' | 'core-banking') => void;
 }
 
 export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
+  const downloadFeaturesPdf = () => {
+    // Generate a professional HTML layout to be converted or printed
+    const features = [
+      { title: "360° Client Management", items: ["KYC Compliance (Digital IDs, Proof of res, Biometrics)", "Group Lending: Track solidarity groups", "Single view of active loans & history"] },
+      { title: "End-to-End Loans", items: ["Automated Lifecycle (Origination to Closure)", "Flexible Configurable Products", "Auto Amortization Schedules"] },
+      { title: "Integrated Accounting", items: ["Real-Time Chart of Accounts Posting", "Operational Expense Tracking", "Pan-African Multi-Currency Support"] },
+      { title: "Treasury & Cash", items: ["Teller Operations Management", "Vault Limits Control", "End-of-Day Balancing"] },
+      { title: "Security & Tech", items: ["Cloud or On-Premise Deployment", "Role-Based Access Control (RBAC)", "Automated Daily Encrypted Backups"] }
+    ];
+
+    const logoUrl = "https://i.ibb.co/3mQjWbgr/lenda-logo-light.png";
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Lenda Technologies - System Features</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+            body { font-family: 'Inter', sans-serif; padding: 40px; color: #1e293b; line-height: 1.6; }
+            .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0ea5e9; padding-bottom: 20px; margin-bottom: 30px; }
+            .logo { height: 60px; }
+            .contact-info { text-align: right; font-size: 12px; color: #64748b; }
+            .title { font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 20px; }
+            .section { margin-bottom: 25px; }
+            .section-title { font-size: 18px; font-weight: 700; color: #0ea5e9; margin-bottom: 10px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+            .feature-list { list-style: none; padding: 0; }
+            .feature-item { margin-bottom: 8px; display: flex; align-items: center; }
+            .feature-item::before { content: '✓'; color: #10b981; font-weight: bold; margin-right: 10px; }
+            .footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 10px; color: #94a3b8; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <img src="${logoUrl}" class="logo" />
+            <div class="contact-info">
+              <strong>Lenda Technologies (Pvt) Ltd</strong><br/>
+              No. 337 Robert Mugabe Way, Masvingo, Zimbabwe<br/>
+              Phone: +263 392 261 394 | +263 778 325 262<br/>
+              Email: info@lendatech.co.zw | Web: www.lenda.co.zw
+            </div>
+          </div>
+          <div class="title">Core Banking System - Features List</div>
+          ${features.map(f => `
+            <div class="section">
+              <div class="section-title">${f.title}</div>
+              <ul class="feature-list">
+                ${f.items.map(i => `<li class="feature-item">${i}</li>`).join('')}
+              </ul>
+            </div>
+          `).join('')}
+          <div class="footer">
+            © ${new Date().getFullYear()} Lenda Technologies. All rights reserved. This document is confidential and intended for proposal purposes.
+          </div>
+          <script>
+            window.onload = function() { window.print(); window.close(); }
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
   return (
     <div className="bg-white min-h-screen">
       
@@ -19,7 +83,6 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-slate-900/90"></div>
-          {/* Diagonal Clip Path */}
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0 100%)' }}></div>
         </div>
 
@@ -37,7 +100,7 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
               </span>
             </h1>
             <p className="text-xl text-slate-300 leading-relaxed max-w-2xl mb-10 border-l-4 border-emerald-500 pl-6">
-              A robust, all-in-one Core Banking System designed specifically for Zimbabwean Microfinance Institutions and SACCOs. Secure, compliant, and multi-currency ready.
+              A robust, all-in-one Core Banking System designed for African Microfinance Institutions and SACCOs. Secure, compliant, and multi-currency ready.
             </p>
             <button 
               onClick={() => onNavigate('quote')}
@@ -53,7 +116,6 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
           </div>
         </div>
         
-        {/* Diagonal Bottom Edge */}
         <div className="absolute bottom-0 left-0 w-full h-24 bg-white" style={{ clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0 100%)' }}></div>
       </div>
 
@@ -65,7 +127,7 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
               <h2 className="text-3xl font-bold text-slate-900">Why Choose Lenda CBS?</h2>
               <div className="w-20 h-1.5 bg-emerald-500"></div>
               <p className="text-lg text-slate-600 leading-relaxed">
-                At Alpha-Lend Solutions, we understand that a Core Banking System is more than just software—it is the engine of your business. Our solution is locally developed to handle the unique complexities of the Zimbabwean market, including multi-currency transactions (ZiG/USD) and regulatory compliance, while offering the modern features found in international banking software.
+                At Lenda Technologies, we understand that a Core Banking System is more than just software—it is the engine of your business. Our solution is designed to handle the complexities of African markets, including multi-currency transactions and diverse regulatory landscapes, while offering the modern features found in international banking software.
               </p>
               <div className="bg-sky-50 p-6 rounded-xl border border-sky-100">
                 <p className="text-sky-800 font-medium italic">
@@ -102,7 +164,7 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
               <h3 className="text-xl font-bold text-slate-900 mb-4">360° Client Management</h3>
               <ul className="space-y-3 text-slate-600 text-sm">
                 <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>KYC Compliance:</strong> Store digital IDs, proof of res, & biometrics.</span></li>
-                <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Group Lending:</strong> Track solidarity groups & liabilities.</span></li>
+                <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Group Lending:</strong> Track solidarity groups.</span></li>
                 <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Customer Profiles:</strong> Single view of all active loans & history.</span></li>
               </ul>
             </div>
@@ -129,7 +191,7 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
               <ul className="space-y-3 text-slate-600 text-sm">
                 <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Real-Time Posting:</strong> Auto-updates Chart of Accounts.</span></li>
                 <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Expense Mgmt:</strong> Track operational costs directly.</span></li>
-                <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Multi-Currency:</strong> Seamless ZiG/USD handling.</span></li>
+                <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Multi-Currency:</strong> Pan-African currency support.</span></li>
               </ul>
             </div>
 
@@ -140,7 +202,7 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-4">SSB & Payroll</h3>
               <ul className="space-y-3 text-slate-600 text-sm">
-                <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Direct Deductions:</strong> Seamless integration with SSB.</span></li>
+                <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Direct Deductions:</strong> Seamless integration with payroll bodies.</span></li>
                 <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Employer Mgmt:</strong> Handle private payroll agreements.</span></li>
               </ul>
             </div>
@@ -153,7 +215,6 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
               <h3 className="text-xl font-bold text-slate-900 mb-4">Treasury & Cash</h3>
               <ul className="space-y-3 text-slate-600 text-sm">
                 <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Teller Ops:</strong> Vault limits & end-of-day balancing.</span></li>
-                <li className="flex gap-2"><CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" /> <span><strong>Bank Recs:</strong> Link physical bank accounts with system.</span></li>
               </ul>
             </div>
 
@@ -166,7 +227,7 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
               <h3 className="text-xl font-bold mb-4">Reporting & Analytics</h3>
               <p className="text-slate-400 text-sm mb-4">Make data-driven decisions with our comprehensive reporting suite.</p>
               <ul className="space-y-3 text-slate-300 text-sm">
-                <li className="flex gap-2"><ArrowRight size={16} className="text-sky-400 shrink-0 mt-0.5" /> <span>RBZ Regulatory Reports</span></li>
+                <li className="flex gap-2"><ArrowRight size={16} className="text-sky-400 shrink-0 mt-0.5" /> <span>Regulatory Compliance Reports</span></li>
                 <li className="flex gap-2"><ArrowRight size={16} className="text-sky-400 shrink-0 mt-0.5" /> <span>Portfolio at Risk (PAR) & NPLs</span></li>
                 <li className="flex gap-2"><ArrowRight size={16} className="text-sky-400 shrink-0 mt-0.5" /> <span>Automated Financial Statements</span></li>
               </ul>
@@ -177,7 +238,6 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
 
       {/* 4. Security & Technology (Dark Section) */}
       <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
-        {/* Background Texture */}
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
         
         <div className="container relative z-10 mx-auto px-4 md:px-6">
@@ -207,7 +267,7 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
                    <div className="mt-1 bg-white/10 p-2 rounded-lg"><Lock size={20} className="text-emerald-400" /></div>
                    <div>
                      <h4 className="font-bold text-lg">Audit Trails & Backups</h4>
-                     <p className="text-slate-400 text-sm">Every action is logged for transparency. Automated daily backups prevent data loss.</p>
+                     <p className="text-slate-400 text-sm">Every action is logged for transparency. Automated daily encrypted backups prevent data loss.</p>
                    </div>
                 </div>
               </div>
@@ -219,11 +279,11 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
                <div className="grid grid-cols-2 gap-4 relative z-10">
                   <div className="bg-slate-900 p-6 rounded-2xl border border-slate-700 text-center">
                     <Database size={32} className="mx-auto text-sky-500 mb-2" />
-                    <p className="font-bold">Encrypted DB</p>
+                    <p className="font-bold">Encrypted Files</p>
                   </div>
                   <div className="bg-slate-900 p-6 rounded-2xl border border-slate-700 text-center">
                     <ShieldCheck size={32} className="mx-auto text-emerald-500 mb-2" />
-                    <p className="font-bold">Fraud Detection</p>
+                    <p className="font-bold">Secure SSL Connections</p>
                   </div>
                   <div className="bg-slate-900 p-6 rounded-2xl border border-slate-700 text-center col-span-2">
                     <div className="flex items-center justify-center gap-2 text-slate-400 text-sm">
@@ -238,22 +298,22 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* 5. Why Perfect for Zimbabwe */}
+      {/* 5. Why Perfect for Africa */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-12">Why It’s Perfect for Zimbabwe</h2>
+          <h2 className="text-3xl font-bold text-slate-900 mb-12">Why It’s Perfect for African MFIs</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
              <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-sky-200 transition-colors">
                <h3 className="text-xl font-bold text-slate-900 mb-3">Plug & Play</h3>
-               <p className="text-slate-600">Unlike international software requiring expensive customization, Lenda CBS is built for the local market.</p>
+               <p className="text-slate-600">Unlike international software requiring expensive customization, Lenda CBS is built for regional markets.</p>
              </div>
              <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-sky-200 transition-colors">
-               <h3 className="text-xl font-bold text-slate-900 mb-3">Local Support</h3>
-               <p className="text-slate-600">Our developers are in Masvingo and Harare, not overseas. Get immediate, local assistance.</p>
+               <h3 className="text-xl font-bold text-slate-900 mb-3">Regional Expertise</h3>
+               <p className="text-slate-600">Our support teams understand local infrastructure and connectivity challenges across the continent.</p>
              </div>
              <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-sky-200 transition-colors">
                <h3 className="text-xl font-bold text-slate-900 mb-3">Evolving Compliance</h3>
-               <p className="text-slate-600">As RBZ regulations change, we update the software immediately to keep you compliant.</p>
+               <p className="text-slate-600">We update our core engine regularly to help you stay compliant with shifting central bank regulations.</p>
              </div>
           </div>
         </div>
@@ -261,13 +321,12 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
 
       {/* 6. CTA Section */}
       <section className="bg-slate-900 py-20 relative border-t-8 border-white">
-        {/* Triangular Depression (Notch) */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[24px] border-l-transparent border-r-[24px] border-r-transparent border-t-[24px] border-t-white"></div>
         
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Upgrade?</h2>
           <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
-            Transform your institution with Alpha-Lend Solutions.
+            Transform your institution with Lenda Technologies.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
              <button 
@@ -283,7 +342,7 @@ export const CoreBanking: React.FC<CoreBankingProps> = ({ onNavigate }) => {
               </button>
 
               <button 
-                onClick={() => alert("Feature List PDF download started...")}
+                onClick={downloadFeaturesPdf}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-slate-700 text-white font-bold hover:bg-slate-800 transition-colors"
               >
                 <Download size={20} />

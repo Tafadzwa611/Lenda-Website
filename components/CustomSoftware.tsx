@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Code, Smartphone, Share2, Database, Search, PenTool, Terminal, Rocket, CheckCircle, Globe, DollarSign, Lock } from 'lucide-react';
+import { Code, Smartphone, Share2, Database, Search, PenTool, Terminal, Rocket, CheckCircle, Globe, DollarSign, Lock, Bot, MessageSquare } from 'lucide-react';
 
 interface CustomSoftwareProps {
   onNavigate: (view: 'home' | 'about' | 'contact' | 'quote' | 'custom') => void;
@@ -37,7 +36,7 @@ export const CustomSoftware: React.FC<CustomSoftwareProps> = ({ onNavigate }) =>
               </span>
             </h1>
             <p className="text-xl text-slate-300 leading-relaxed max-w-2xl mb-10 border-l-4 border-purple-500 pl-6">
-              Off-the-shelf solutions don't fit everyone. We design, build, and deploy tailor-made software that solves your unique operational challenges.
+              Off-the-shelf solutions don't fit everyone. We design, build, and deploy tailor-made software, AI Chatbots, and integrations that solve your unique operational challenges.
             </p>
             <button 
               onClick={() => onNavigate('quote')}
@@ -69,7 +68,7 @@ export const CustomSoftware: React.FC<CustomSoftwareProps> = ({ onNavigate }) =>
               </p>
               <div className="bg-slate-50 p-6 rounded-xl border-l-4 border-sky-500">
                 <p className="text-slate-700 font-medium">
-                  At Alpha-Lend Solutions, we do the opposite. We build software that fits you.
+                  At Lenda Technologies, we do the opposite. We build software that fits you.
                 </p>
               </div>
               <p className="text-slate-600 leading-relaxed">
@@ -92,7 +91,7 @@ export const CustomSoftware: React.FC<CustomSoftwareProps> = ({ onNavigate }) =>
       <section className="py-24 bg-slate-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Our Development Services</h2>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Our Custom Solutions</h2>
             <p className="text-slate-600">From concept to deployment, we cover the full stack.</p>
           </div>
 
@@ -102,20 +101,20 @@ export const CustomSoftware: React.FC<CustomSoftwareProps> = ({ onNavigate }) =>
               <div className="w-14 h-14 bg-sky-100 text-sky-600 rounded-xl flex items-center justify-center mb-6">
                 <Globe size={28} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">1. Web Application Development</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">1. Web & Mobile Apps</h3>
               <p className="text-slate-600 leading-relaxed">
-                We build secure, cloud-based applications that your team can access from anywhere. From inventory systems to specialized HR tools, we code robust web platforms that drive efficiency.
+                We build secure, cloud-based applications and mobile tools (Android/iOS) that your team and customers can access from anywhere. We code robust platforms that drive efficiency in low-data environments.
               </p>
             </div>
 
             {/* Service 2 */}
             <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-all hover:-translate-y-1">
               <div className="w-14 h-14 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6">
-                <Smartphone size={28} />
+                <Bot size={28} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">2. Mobile App Development</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">2. AI Chatbots (WhatsApp & Web)</h3>
               <p className="text-slate-600 leading-relaxed">
-                Equip your customers or staff with powerful mobile tools. We develop Android and iOS applications that work seamlessly, even in low-data environments common in some parts of Zimbabwe.
+                Automate your customer service with intelligent 24/7 bots. In Zimbabwe, WhatsApp is essential. Our bots handle loan balance checks, applications, and FAQ answering instantly.
               </p>
             </div>
 
@@ -124,10 +123,10 @@ export const CustomSoftware: React.FC<CustomSoftwareProps> = ({ onNavigate }) =>
               <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-6">
                 <Share2 size={28} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">3. API & System Integration</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">3. System Integration & API</h3>
               <p className="text-slate-500 text-xs uppercase font-bold mb-2">"The Glue Between Systems"</p>
               <p className="text-slate-600 leading-relaxed">
-                Do you have an accounting system that doesn't talk to your sales system? We specialize in System Integration—connecting disparate software so they function as a single, cohesive unit. This reduces double-entry and data errors.
+                We connect disparate systems—Accounting (Sage, Xero), Banking APIs (CBZ, Steward), and Payment Gateways (EcoCash, Paynow)—into one cohesive digital ecosystem.
               </p>
             </div>
 
@@ -167,7 +166,6 @@ export const CustomSoftware: React.FC<CustomSoftwareProps> = ({ onNavigate }) =>
                  <h4 className="font-bold text-slate-900 mb-2">{step.title}</h4>
                  <p className="text-sm text-slate-600">{step.desc}</p>
                  
-                 {/* Connector Line */}
                  {idx < 4 && (
                    <div className="hidden md:block absolute top-8 left-1/2 w-full h-1 bg-slate-100 -z-0"></div>
                  )}
@@ -191,7 +189,7 @@ export const CustomSoftware: React.FC<CustomSoftwareProps> = ({ onNavigate }) =>
               </div>
               <h3 className="text-xl font-bold mb-3">Local Understanding</h3>
               <p className="text-slate-400 leading-relaxed">
-                We know the Zimbabwean business environment (connectivity issues, payment gateways, etc.).
+                We know the African business environment (connectivity issues, payment gateways, and regulatory shifts).
               </p>
             </div>
 
@@ -201,7 +199,7 @@ export const CustomSoftware: React.FC<CustomSoftwareProps> = ({ onNavigate }) =>
               </div>
               <h3 className="text-xl font-bold mb-3">Cost-Effective</h3>
               <p className="text-slate-400 leading-relaxed">
-                World-class coding standards at competitive local rates.
+                World-class coding standards at competitive local rates for regional institutions.
               </p>
             </div>
 

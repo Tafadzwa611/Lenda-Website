@@ -1,4 +1,3 @@
-
 // Fix: Use standard modular Firebase imports and updated Gemini SDK patterns
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Bot, Sparkles, Minus, Loader2, ArrowUpRight, Mic, Volume2, VolumeX, Eye } from 'lucide-react';
@@ -6,27 +5,27 @@ import { GoogleGenAI, Chat, FunctionDeclaration, Type, Modality } from "@google/
 
 // --- SITE CONTEXT FOR AI ---
 const LENDA_CONTEXT = `
-You are the AI assistant for Lenda Technologies (Alpha-Lend Solutions).
+You are the AI assistant for Lenda Technologies.
 Your goal is to answer questions about Lenda's products and services based strictly on the information below.
 
 COMPANY PROFILE:
-- Name: Alpha-Lend Solutions (trading as Lenda Technologies).
+- Name: Lenda Technologies.
 - Location: No. 337 Robert Mugabe Way, Masvingo, Zimbabwe.
 - Contacts: +263 392 261 394 (Landline), +263 778 325 262 (Mobile/WhatsApp), info@lendatech.co.zw.
-- Mission: To engineer durable software infrastructure for Zimbabwe's financial sector.
+- Mission: To engineer durable software infrastructure for Africa's financial sector.
 
 PRODUCTS & SERVICES:
 
 1. CORE BANKING SYSTEM (CBS) - "The Heart of Your Financial Operations"
-   - For: Microfinance Institutions (MFIs) and SACCOs.
+   - For: African Microfinance Institutions (MFIs) and SACCOs.
    - Key Features:
-     - Client Management: KYC compliance (digital IDs, biometrics), Group Lending tracking, Customer Profiles.
+     - Client Management: KYC compliance (digital IDs, biometrics), Group Lending tracking.
      - Loan Management: Automates origination to closure. Configurable rates, penalties, grace periods. Auto-amortization schedules.
-     - Integrated Accounting: Real-time GL posting, Expense management, Multi-currency (ZiG/USD).
-     - Treasury & Cash: Vault limits, Teller operations, Bank reconciliations.
-     - Reporting: RBZ regulatory reports, Portfolio at Risk (PAR), NPLs.
-   - Tech Specs: Cloud or On-Premise deployment, Role-Based Access Control (RBAC), Audit Trails, Encrypted Database.
-   - Why it fits Zimbabwe: Plug & Play for local compliance (RBZ), Local support team in Masvingo/Harare.
+     - Integrated Accounting: Real-time GL posting, Expense management, Multi-currency (ZiG/USD/African Currencies).
+     - Treasury & Cash: Vault limits, Teller operations.
+     - Reporting: Regulatory reports, Portfolio at Risk (PAR), NPLs.
+   - Tech Specs: Cloud or On-Premise deployment, Role-Based Access Control (RBAC), Audit Trails, Encrypted Files.
+   - Target: Plug & Play for African regional compliance.
 
 2. SSB DEDUCTIONS PLATFORM
    - Function: Automates "Stop Order" loan deductions for civil servants.
@@ -35,45 +34,23 @@ PRODUCTS & SERVICES:
      - Bulk File Upload (handles 10 to 10,000+ clients).
      - Pre-Validation Checks to reduce rejections.
      - Reconciliation: Auto-compares requests vs. payments received.
-   - Target Clients: MFIs, Retailers (furniture/appliances), Insurance companies, Funeral assurance.
    - Benefits: Zero formatting errors, reduced admin costs, faster collections.
 
-3. CUSTOM SOFTWARE DEVELOPMENT
+3. CUSTOM SOFTWARE DEVELOPMENT (Includes AI Chatbots & Integrations)
    - Services: 
-     - Web Application Development (Cloud-based inventory, HR tools).
-     - Mobile App Development (Android/iOS for field agents or customers).
-     - API & System Integration ("The Glue Between Systems").
-     - Database Design.
-   - Why Custom?: Tailor-made to fit unique processes, Intellectual Property ownership, Cost-effective local rates.
-
-4. CHATBOTS & AI
-   - Platforms: WhatsApp (Business Essential in Zim) and Web.
-   - Functions: Loan balance checks, Loan applications, Statement requests, Lead generation, FAQs.
-   - Internal Use: Staff can query databases via chat (e.g., "Show sales for today").
-
-5. SYSTEM INTEGRATION
-   - Capabilities:
-     - Payment Gateways: EcoCash, OneMoney, Paynow (Auto-disbursement/Receipting).
-     - Banking APIs: Steward Bank, CBZ (Push/Pull transactions).
-     - Accounting: Sage, QuickBooks, Xero.
-
-TEAM:
-- Tanaka Maramba (CEO) - Software Engineer, 5 years exp.
-- Tafadzwa Kuno (Snr Dev) - Mathematician.
-- Robson Muvani (Snr Dev) - Canadian national, Telecoms exp.
-- Tamuka Mutinhima (Strategist) - Microfinance expert.
-- Theresa Chikwinya (Accountant).
+     - Web & Mobile App Development (Android/iOS).
+     - AI Chatbots: WhatsApp (Business Essential) and Web assistants.
+     - System Integrations: EcoCash, OneMoney, Paynow, Accounting (Sage, QuickBooks, Xero), Banking APIs.
+   - Why Lenda?: Local understanding, cost-effective local rates, intellectual property ownership.
 
 PRICING & QUOTES:
-- Do not provide specific dollar amounts.
+- Do not provide specific dollar amounts besides "Lenda Starter" which starts at $100/Mo.
 - Encourage users to use the "Get a Quote" feature for a tailored proposal.
 
 NAVIGATION INSTRUCTIONS:
 - You have access to a tool called 'navigate_to_page'.
-- WHENEVER the user asks about a specific product, service, or section (e.g., "Tell me about SSB", "Show me the team"), you MUST call this tool to open the relevant page for them.
-- Provide a short helpful text response first, then trigger the tool.
-- Page IDs: 'home', 'about', 'contact', 'quote', 'core-banking', 'ssb', 'custom', 'chatbots', 'integration', 'blog'.
-- Section IDs: 'service-core-banking', 'service-ssb', 'cbs-features', 'our-team'.
+- WHENEVER the user asks about a specific product, service, or section, you MUST call this tool to open the relevant page for them.
+- Page IDs: 'home', 'about', 'contact', 'quote', 'core-banking', 'ssb', 'custom', 'blog'.
 `;
 
 // --- AUDIO HELPERS ---
@@ -121,7 +98,6 @@ interface ChatBotProps {
   onNavigate: (view: any) => void;
 }
 
-// Declare speech API on window
 declare global {
   interface Window {
     SpeechRecognition: any;
@@ -129,7 +105,6 @@ declare global {
   }
 }
 
-// Tool Definition
 const navigationTool: FunctionDeclaration = {
   name: "navigate_to_page",
   description: "Suggests a navigation action to the user to see a specific page or section.",
@@ -139,15 +114,15 @@ const navigationTool: FunctionDeclaration = {
       page: {
         type: Type.STRING,
         description: "The view ID to navigate to.",
-        enum: ['home', 'about', 'contact', 'quote', 'core-banking', 'ssb', 'custom', 'chatbots', 'integration', 'blog']
+        enum: ['home', 'about', 'contact', 'quote', 'core-banking', 'ssb', 'custom', 'blog']
       },
       section: {
         type: Type.STRING,
-        description: "The HTML ID of the section or card to highlight (e.g., 'service-ssb', 'cbs-features')."
+        description: "The HTML ID of the section or card to highlight."
       },
       label: {
         type: Type.STRING,
-        description: "Short label for the button, e.g., 'View SSB Details' or 'See Our Team'."
+        description: "Short label for the button."
       }
     },
     required: ["page", "label"]
@@ -164,20 +139,16 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Gemini References
   const chatSessionRef = useRef<Chat | null>(null);
   const [aiError, setAiError] = useState(false);
 
-  // Voice State - ENABLED BY DEFAULT
   const [isListening, setIsListening] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const recognitionRef = useRef<any>(null);
   
-  // Audio Playback References
   const audioContextRef = useRef<AudioContext | null>(null);
   const currentSourceRef = useRef<AudioBufferSourceNode | null>(null);
 
-  // Initialize Gemini Chat
   useEffect(() => {
     if (!chatSessionRef.current) {
         try {
@@ -196,13 +167,12 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
     }
   }, []);
 
-  // Initialize Speech Recognition
   useEffect(() => {
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = false; // Stop after one sentence/command
-      recognitionRef.current.interimResults = true; // Show results while speaking
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = true;
 
       recognitionRef.current.onstart = () => setIsListening(true);
       recognitionRef.current.onend = () => setIsListening(false);
@@ -222,7 +192,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
     }
 
     return () => {
-      // Cleanup Audio Context
       if (audioContextRef.current) {
         audioContextRef.current.close();
       }
@@ -239,27 +208,23 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
     }
   }, [messages, isTyping, isOpen, isListening, isMinimized]);
 
-  // Voice Toggle
   const toggleVoice = () => {
     if (voiceEnabled) {
-      // Stop current playback if disabling
       if (currentSourceRef.current) {
         currentSourceRef.current.stop();
       }
     } else {
-        // Prepare audio context immediately when enabling
         initAudioContext();
     }
     setVoiceEnabled(!voiceEnabled);
   };
 
-  // Mic Toggle
   const toggleMic = () => {
     if (!recognitionRef.current) {
       alert("Speech recognition is not supported in this browser.");
       return;
     }
-    initAudioContext(); // Warm up output context too
+    initAudioContext();
     if (isListening) {
       recognitionRef.current.stop();
     } else {
@@ -277,7 +242,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
     }
   };
 
-  // Gemini Text-to-Speech
   const speak = async (text: string) => {
     if (!voiceEnabled) return;
     
@@ -285,7 +249,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
         const cleanText = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1').replace(/\*/g, '');
         if (!cleanText.trim()) return;
 
-        // Ensure context is ready
         await initAudioContext();
 
         const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -313,13 +276,10 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
                 1
             );
 
-            // Stop previous audio if playing
             if (currentSourceRef.current) {
                 try {
                     currentSourceRef.current.stop();
-                } catch (e) {
-                    // Ignore if already stopped
-                }
+                } catch (e) {}
             }
 
             const source = audioContextRef.current.createBufferSource();
@@ -343,7 +303,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
     if (isMinimized) {
       setIsMinimized(false);
     }
-    // Warm up audio context on interaction to reduce latency later
     initAudioContext();
   };
 
@@ -369,7 +328,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
         recognitionRef.current.stop();
     }
 
-    // Ensure audio context is awake when user sends message
     initAudioContext();
 
     const userMsgText = inputValue;
@@ -384,7 +342,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
     setIsTyping(true);
     setIsMinimized(false);
 
-    // Stop current speech when user sends a new message
     if (currentSourceRef.current) {
         currentSourceRef.current.stop();
     }
@@ -431,7 +388,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
                 pendingNavigation: pendingNav
             };
             setMessages(prev => [...prev, botResponse]);
-            // Call speak immediately after setting message
             if (botMessageText) speak(botMessageText);
         }
 
@@ -508,15 +464,12 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-      {/* Chat Window */}
       {isOpen && (
         <div 
           className={`mb-4 w-[350px] md:w-[400px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-700 transition-all duration-500 ease-in-out origin-bottom-right ${
             isMinimized ? 'h-[80px]' : 'h-[550px]'
           }`}
         >
-          
-          {/* Header */}
           <div className={`bg-slate-900 p-4 flex items-center justify-between text-white border-b border-slate-800 transition-opacity duration-300 ${isMinimized ? 'opacity-0 h-0 p-0 overflow-hidden' : 'opacity-100 h-auto'}`}>
             <div className="flex items-center gap-3">
               <div className="bg-white/10 p-2 rounded-full backdrop-blur-sm border border-white/20">
@@ -547,7 +500,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Messages Area */}
           <div className={`flex-grow p-4 overflow-y-auto bg-slate-50 space-y-4 transition-all duration-300 ${isMinimized ? 'opacity-0 hidden' : 'opacity-100 block'}`}>
             {messages.map((msg) => (
               <div 
@@ -578,10 +530,7 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area */}
           <div className={`p-4 bg-white border-t border-slate-100 relative ${isMinimized ? 'h-full flex flex-col justify-center' : ''}`}>
-            
-            {/* Listening Indicator */}
             {isListening && (
               <div className="absolute top-0 left-0 right-0 -mt-8 flex justify-center pointer-events-none">
                  <div className="bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2">
@@ -603,7 +552,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
                    disabled={aiError}
                    className={`w-full bg-slate-50 border text-slate-800 text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 transition-all placeholder:text-slate-400 disabled:opacity-50 ${isListening ? 'border-sky-500 ring-2 ring-sky-100' : 'border-slate-200'}`}
                  />
-                 {/* Mic Button */}
                  <button 
                    onClick={toggleMic}
                    className={`absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg transition-colors ${
@@ -626,7 +574,6 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
               </button>
             </div>
             
-            {/* Footer */}
             <div className={`text-center mt-3 transition-opacity duration-200 ${isMinimized ? 'opacity-0 hidden' : 'opacity-100'}`}>
                <span className="text-[10px] text-slate-400 flex items-center justify-center gap-1 font-medium tracking-wide">
                  POWERED BY LENDA AI <Sparkles size={10} className="text-sky-500" />
@@ -636,12 +583,10 @@ export const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
         </div>
       )}
 
-      {/* Floating Button (Smaller) */}
       <button 
         onClick={() => {
           setIsOpen(!isOpen);
           if (!isOpen) setIsMinimized(false);
-          // Pre-warm audio on open
           if (!isOpen) initAudioContext();
         }}
         className={`group relative shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center border-2 border-slate-700/50 ${

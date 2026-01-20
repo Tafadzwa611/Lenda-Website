@@ -20,11 +20,60 @@ import { AnalyticsTracker } from './components/AnalyticsTracker';
 import { PromoModal } from './components/PromoModal';
 import { CookieConsent } from './components/CookieConsent';
 
+type ViewType = 'home' | 'about' | 'contact' | 'quote' | 'admin' | 'core-banking' | 'ssb' | 'custom' | 'chatbots' | 'integration' | 'blog';
+
+const viewToPath: Record<ViewType, string> = {
+  home: '/',
+  about: '/about',
+  contact: '/contact',
+  quote: '/quote',
+  admin: '/admin',
+  'core-banking': '/core-banking',
+  ssb: '/ssb',
+  custom: '/custom',
+  chatbots: '/chatbots',
+  integration: '/integration',
+  blog: '/blog',
+};
+
+const pathToView: Record<string, ViewType> = Object.entries(viewToPath).reduce(
+  (acc, [view, path]) => ({ ...acc, [path]: view as ViewType }),
+  {}
+);
+
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'home' | 'about' | 'contact' | 'quote' | 'admin' | 'core-banking' | 'ssb' | 'custom' | 'chatbots' | 'integration' | 'blog'>('home');
+  const [currentView, setCurrentViewInternal] = useState<ViewType>('home');
   const ctaRef = useRef<HTMLDivElement>(null);
   const [isCtaVisible, setIsCtaVisible] = useState(false);
   const [selectedBlogId, setSelectedBlogId] = useState<string | null>(null);
+
+  // Helper to update view and URL
+  const setCurrentView = (view: ViewType) => {
+    setCurrentViewInternal(view);
+    const path = viewToPath[view];
+    if (window.location.pathname !== path) {
+      window.history.pushState({ view }, '', path);
+    }
+  };
+
+  // Initialize view from URL on mount
+  useEffect(() => {
+    const path = window.location.pathname;
+    const view = pathToView[path] || 'home';
+    setCurrentViewInternal(view);
+
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.view) {
+        setCurrentViewInternal(event.state.view);
+      } else {
+        const p = window.location.pathname;
+        setCurrentViewInternal(pathToView[p] || 'home');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Automatically scroll to top whenever the view changes
   useEffect(() => {
@@ -74,7 +123,6 @@ const App: React.FC = () => {
   }, [currentView]);
 
   useEffect(() => {
-    // Only set up observer if we are on home view where the CTA exists
     if (currentView === 'home') {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -103,7 +151,6 @@ const App: React.FC = () => {
       setSelectedBlogId(id);
     }
     setCurrentView('blog');
-    // Scroll handling is now done by the useEffect above
   };
 
   return (
@@ -119,51 +166,26 @@ const App: React.FC = () => {
         {currentView === 'home' && (
           <>
             <Hero onNavigate={setCurrentView} onExplore={scrollToProducts} />
-            
-            {/* Trusted Customers Section */}
             <TrustedCustomers />
-            
-            {/* Products and Services Section */}
             <ProductsAndServices onNavigate={setCurrentView} />
+            <LatestNews onNavigate={setCurrentView} onViewPost={handleBlogNavigation} />
 
-            {/* Latest News Section */}
-            <LatestNews 
-              onNavigate={setCurrentView} 
-              onViewPost={handleBlogNavigation} 
-            />
-
-            {/* Call to Action Strip */}
             <section ref={ctaRef} className="bg-slate-900 py-20 relative border-t-8 border-white">
-              {/* Triangular Depression (Notch) */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[24px] border-l-transparent border-r-[24px] border-r-transparent border-t-[24px] border-t-white"></div>
-
               <div className="container mx-auto px-4 md:px-6 text-center overflow-hidden">
-                <h2 
-                  className={`text-3xl font-bold text-white mb-6 opacity-0 ${isCtaVisible ? 'animate-slide-in-right' : ''}`}
-                >
+                <h2 className={`text-3xl font-bold text-white mb-6 opacity-0 ${isCtaVisible ? 'animate-slide-in-right' : ''}`}>
                   Ready to transform your lending business?
                 </h2>
                 <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
                   Join leading financial institutions in Zimbabwe who trust Lenda Technologies.
                 </p>
                 <div className={`opacity-0 ${isCtaVisible ? 'animate-slide-in-top delay-300' : ''}`}>
-                  <button 
-                    onClick={() => {
-                      setCurrentView('quote');
-                    }}
-                    className="lenda-button secondary mx-auto"
-                  >
+                  <button onClick={() => setCurrentView('quote')} className="lenda-button secondary mx-auto">
                     <span>Get Started Today</span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 43">
-                      <polygon
-                        points="39.58,4.46 44.11,0 66,21.5 44.11,43 39.58,38.54 56.94,21.5"
-                      ></polygon>
-                      <polygon
-                        points="19.79,4.46 24.32,0 46.21,21.5 24.32,43 19.79,38.54 37.15,21.5"
-                      ></polygon>
-                      <polygon
-                        points="0,4.46 4.53,0 26.42,21.5 4.53,43 0,38.54 17.36,21.5"
-                      ></polygon>
+                      <polygon points="39.58,4.46 44.11,0 66,21.5 44.11,43 39.58,38.54 56.94,21.5"></polygon>
+                      <polygon points="19.79,4.46 24.32,0 46.21,21.5 24.32,43 19.79,38.54 37.15,21.5"></polygon>
+                      <polygon points="0,4.46 4.53,0 26.42,21.5 4.53,43 0,38.54 17.36,21.5"></polygon>
                     </svg>
                   </button>
                 </div>

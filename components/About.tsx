@@ -263,7 +263,7 @@ export const About: React.FC = () => {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-200 max-w-2xl leading-relaxed border-l-4 border-sky-500 pl-6 font-light drop-shadow-md">
-              We are not just a software company. We are the <span className="text-sky-300 font-medium">digital architects</span> of Zimbabwe's financial evolution.
+              We are not just a software company. We are the <span className="text-sky-300 font-medium">digital architects</span> of Africa's financial evolution.
             </p>
           </div>
         </div>
@@ -278,7 +278,7 @@ export const About: React.FC = () => {
             <div className="space-y-8">
               <DecryptHeader id="scramble-target" text="IDENTITY VERIFIED" className="text-sm font-bold text-sky-600 tracking-widest uppercase" />
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
-                Alpha-Lend Solutions. <br />
+                Lenda Technologies. <br />
                 <span className="text-slate-400">Coding the uncodable.</span>
               </h2>
               <p className="text-lg text-slate-600 leading-relaxed">
@@ -317,7 +317,7 @@ export const About: React.FC = () => {
               <div className="space-y-4">
                 <h3 className="text-3xl font-bold">The Origin</h3>
                 <p className="text-slate-400 text-lg leading-relaxed">
-                  While the world automated, local finance relied on paper. We saw the gap. We wrote the code.
+                  While the world automated, African finance often relied on paper. We saw the gap. We wrote the code.
                 </p>
               </div>
             </div>
@@ -334,9 +334,6 @@ export const About: React.FC = () => {
              {flyingData.map((item) => {
                const dx = item.end.left - item.start.left;
                const dy = item.end.top - item.start.top;
-               // We move center to orbit, and orbit to center.
-               // Center card is larger, Orbit card is smaller.
-               // Calculate scale factor.
                const scaleX = item.end.width / item.start.width;
                const scaleY = item.end.height / item.start.height;
 
@@ -349,9 +346,8 @@ export const About: React.FC = () => {
                      left: item.start.left,
                      width: item.start.width,
                      height: item.start.height,
-                     // Use 'forwards' to ensure it stays at destination until React unmounts it
                      animation: `fly-swap 1.2s cubic-bezier(0.2, 0, 0.2, 1) forwards`,
-                     zIndex: item.direction === 'in' ? 60 : 50, // Incoming goes over outgoing
+                     zIndex: item.direction === 'in' ? 60 : 50,
                    }}
                  >
                     <img src={item.img} className="w-full h-full object-cover" alt="" />
@@ -375,10 +371,8 @@ export const About: React.FC = () => {
 
           <div className="flex flex-col xl:flex-row items-center justify-center gap-12 xl:gap-24">
             
-            {/* --- Orbit System Container --- */}
             <div className="relative w-full aspect-square flex items-center justify-center orbit-system-container">
               <style>{`
-                /* Responsive Variables */
                 .orbit-system-container {
                   --orbit-radius: 120px;
                   --item-size: 70px;
@@ -404,7 +398,6 @@ export const About: React.FC = () => {
                   to { transform: rotate(0deg); }
                 }
                 
-                /* Wrapper for rotating items only */
                 .orbit-wrapper {
                   position: absolute;
                   inset: 0;
@@ -436,11 +429,9 @@ export const About: React.FC = () => {
                 }
               `}</style>
 
-              {/* Decorative Rings */}
               <div className="absolute inset-0 m-auto rounded-full border border-dashed border-slate-300/50" style={{ width: 'calc(var(--orbit-radius) * 2)', height: 'calc(var(--orbit-radius) * 2)' }}></div>
               <div className="absolute inset-0 m-auto rounded-full border border-slate-100" style={{ width: 'calc(var(--orbit-radius) * 2.8)', height: 'calc(var(--orbit-radius) * 2.8)' }}></div>
 
-              {/* 1. Static Center Container (Not rotating) */}
               <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                  <div ref={centerRef} className="pointer-events-auto">
                     <div 
@@ -457,7 +448,6 @@ export const About: React.FC = () => {
                          />
                        </div>
                        
-                       {/* Name & Role (Only on Center) */}
                        <div className="text-center animate-in fade-in zoom-in duration-500">
                           <p className="font-bold text-slate-900 text-lg leading-tight">{activeMember.name}</p>
                           <p className="font-medium text-sky-600 text-sm leading-tight">{activeMember.role}</p>
@@ -466,7 +456,6 @@ export const About: React.FC = () => {
                  </div>
               </div>
 
-              {/* 2. Rotating Orbit Container */}
               <div className={`orbit-wrapper ${hoveredId !== null ? 'orbit-paused' : ''}`}>
                 {orbitIds.map((memberId, index) => {
                   const member = teamMembers.find(m => m.id === memberId);
@@ -486,9 +475,7 @@ export const About: React.FC = () => {
                       onMouseLeave={() => setHoveredId(null)}
                       onClick={() => handleMemberClick(member.id)}
                     >
-                      {/* Counter-Spin to keep upright relative to screen */}
                       <div className="orbit-counter-spinner">
-                         {/* Correct for slot placement angle */}
                          <div style={{ transform: `rotate(-${angle}deg)`, width: '100%', height: '100%' }}>
                             <div 
                               ref={el => { if(el) orbitRefs.current.set(member.id, el); }}
@@ -510,13 +497,10 @@ export const About: React.FC = () => {
                   );
                 })}
               </div>
-
             </div>
 
-            {/* --- Member Details Panel --- */}
             <div ref={detailsRef} className="max-w-md w-full px-4 relative scroll-mt-32">
               <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 shadow-xl relative overflow-hidden transition-all duration-500">
-                {/* Decorative Background Blob */}
                 <div key={activeMember.id} className="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl animate-in fade-in duration-1000"></div>
                 
                 <div className="relative z-10">
@@ -551,12 +535,10 @@ export const About: React.FC = () => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* 5. CORE VALUES */}
       <section id="our-values" className="py-32 bg-slate-50 relative">
         <div className="container relative z-10 mx-auto px-4 md:px-6">
           <div className="text-center mb-20">
@@ -582,7 +564,6 @@ export const About: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. VISION & MISSION */}
       <section className="py-32 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -590,14 +571,14 @@ export const About: React.FC = () => {
               <Target className="w-12 h-12 text-sky-400 mb-6" />
               <h3 className="text-3xl font-bold mb-4">Our Mission</h3>
               <p className="text-slate-400 text-lg leading-relaxed">
-                To engineer durable, refined software infrastructure that empowers Zimbabwean institutions to compete on a global scale.
+                To engineer durable, refined software infrastructure that empowers regional institutions to compete on a global scale.
               </p>
             </div>
             <div className="bg-slate-50 p-10 rounded-[2.5rem] border border-slate-100">
               <Lightbulb className="w-12 h-12 text-purple-600 mb-6" />
               <h3 className="text-3xl font-bold mb-4 text-slate-900">Our Vision</h3>
               <p className="text-slate-600 text-lg leading-relaxed">
-                To become the definitive technology partner for the region, transforming how value is exchanged, managed, and grown.
+                To become the definitive technology partner for Africa, transforming how value is exchanged, managed, and grown.
               </p>
             </div>
           </div>

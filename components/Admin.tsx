@@ -205,7 +205,7 @@ export const Admin: React.FC<AdminProps> = ({ onNavigate }) => {
     try {
       const adminRef = ref(db, 'admin/accessKey');
       const snapshot = await get(adminRef);
-      // Default password seeded as 123456
+      // Admin password requested as 123456
       const currentKey = snapshot.val() || '123456';
       if (password === currentKey) setIsAuthenticated(true);
       else alert('Invalid Password');

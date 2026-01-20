@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Check, X, Box, Users, FileText, Server, Globe, Settings, Clock, ArrowRight } from 'lucide-react';
+import { Check, X, Box, Users, FileText, Server, Globe, Settings, Clock, ArrowRight, Wallet } from 'lucide-react';
 
 interface PromoModalProps {
   onNavigate: (view: 'quote') => void;
@@ -59,13 +59,6 @@ export const PromoModal: React.FC<PromoModalProps> = ({ onNavigate }) => {
           ${isClosing ? 'promo-exit' : 'promo-enter'}
         `}
       >
-        {/* Ribbon - Hidden on small mobile to save space */}
-        <div className="hidden sm:block absolute top-0 right-0 z-10">
-           <div className="bg-emerald-500 text-white text-xs font-bold px-8 py-1 transform rotate-45 translate-x-8 translate-y-4 shadow-md">
-             FREE TRIAL
-           </div>
-        </div>
-
         {/* Close Button */}
         <button 
           onClick={handleClose}
@@ -77,17 +70,18 @@ export const PromoModal: React.FC<PromoModalProps> = ({ onNavigate }) => {
         {/* Left Side: Features */}
         <div className="flex-1 p-6 md:p-8 bg-slate-50 flex flex-col justify-center">
           <h3 className="text-lg md:text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2 animate-in slide-in-from-left-4 fade-in duration-700">
-            Introducing <span className="text-emerald-500">Lenda Starter</span>
+            Introducing <span className="text-sky-500">Lenda Starter</span>
           </h3>
 
-          <ul className="space-y-3">
+          <ul className="space-y-2">
             {[
               { icon: Box, text: "Client, Group, Loan & Accounting Modules" },
+              { icon: Wallet, text: "Deposits Module (Savings Management)" },
               { icon: Users, text: "Digital Field Application for 5 users" },
-              { icon: FileText, text: "50+ Reports and Data Export Module" },
-              { icon: Server, text: "Up to 100,000 API Requests a month" },
+              { icon: FileText, text: "Reports and Data Export Module" },
+              { icon: Server, text: "Unlimited API requests a month" },
               { icon: Globe, text: "Up to 3,000 End Clients" },
-              { icon: Settings, text: "Self onboarding & Configuration" },
+              { icon: Settings, text: "Configuration Support" },
               { icon: Clock, text: "Ticket support within 24 hours" }
             ].map((item, idx) => (
               <li 
@@ -95,7 +89,7 @@ export const PromoModal: React.FC<PromoModalProps> = ({ onNavigate }) => {
                 className="flex items-start gap-2.5 text-slate-600 text-xs md:text-sm animate-in slide-in-from-bottom-2 fade-in"
                 style={{ animationDelay: `${100 + (idx * 50)}ms`, animationFillMode: 'forwards' }}
               >
-                <item.icon size={16} className="shrink-0 text-emerald-500 mt-0.5" />
+                <item.icon size={16} className="shrink-0 text-sky-500 mt-0.5" />
                 <span>{item.text}</span>
               </li>
             ))}
@@ -103,29 +97,29 @@ export const PromoModal: React.FC<PromoModalProps> = ({ onNavigate }) => {
           
           <div className="hidden md:flex mt-6 pt-4 border-t border-slate-200 text-xs text-slate-500 items-center gap-2 animate-in fade-in delay-700">
              <Server size={14} className="text-slate-400" />
-             Detailed demo and system overview session included (2 hours)
+             Detailed system overview session included
           </div>
         </div>
 
         {/* Right Side: CTA */}
         <div className="w-full md:w-[300px] bg-white p-6 md:p-8 flex flex-col justify-center border-l border-slate-100 relative shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] md:shadow-none">
-           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-sky-500 md:hidden"></div>
+           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sky-400 to-purple-500 md:hidden"></div>
            
            <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 mb-2 md:mb-4 animate-in slide-in-from-right-4 fade-in delay-300">
-             Free Trial
+             Lenda Starter
            </h2>
            
            <div className="text-xs md:text-sm text-slate-500 mb-4 md:mb-6 space-y-1 animate-in slide-in-from-right-4 fade-in delay-500">
-             <p>After 1 month price: <strong className="text-slate-900">$499/Mo</strong></p>
-             <p className="text-emerald-600 font-medium">*Limited time offer</p>
+             <p>Starting at: <strong className="text-slate-900">$100/Mo</strong></p>
+             <p className="text-sky-600 font-medium">*Billed monthly</p>
            </div>
 
            <div className="space-y-3 animate-in zoom-in fade-in delay-700">
              <button 
                onClick={handleCtaClick}
-               className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-lg shadow-emerald-500/30 transition-all active:scale-95 flex items-center justify-center gap-2"
+               className="w-full py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm shadow-lg shadow-sky-500/30 transition-all active:scale-95 flex items-center justify-center gap-2"
              >
-               GET 1 MONTH FREE
+               GET STARTED NOW
              </button>
              <button 
                onClick={handleCtaClick}
