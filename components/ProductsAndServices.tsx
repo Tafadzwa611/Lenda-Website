@@ -1,23 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Briefcase, Cpu, ArrowRight, Zap, CheckCircle2 } from 'lucide-react';
 
 const services = [
   {
     id: 'core-banking',
-    cardId: 'service-core-banking',
     title: "Core Banking System",
     short: "CBS",
-    desc: "Automate and manage loan processes, clients, groups, and accounting in a flexible way.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-    direction: "animate-slide-in-left"
+    desc: "A robust, multi-currency engine for loan management, client tracking, and real-time accounting modules designed for the African financial sector.",
+    icon: <Briefcase size={28} className="text-sky-500" />,
+    features: ["Loan Origination & Lifecycle", "Integrated GL Accounting", "Deposits & Savings Module"]
   },
   {
     id: 'custom',
-    cardId: 'service-digitalisation',
-    title: "Digitalisation",
+    title: "Digitalisation & AI",
     short: "Digital",
-    desc: "Transforming manual processes into efficient, automated digital workflows to modernize your business operations.",
-    image: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=800&q=80",
-    direction: "animate-slide-in-right"
+    desc: "Modernize manual workflows into automated digital systems including field agent apps, SSB integrations, and intelligent WhatsApp chatbots.",
+    icon: <Cpu size={28} className="text-purple-500" />,
+    features: ["Field Agent Mobile Apps", "Process Automation", "WhatsApp & Web Chatbots"]
   }
 ];
 
@@ -29,7 +28,6 @@ export const ProductsAndServices: React.FC<ProductsAndServicesProps> = ({ onNavi
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Intersection Observer for animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -37,7 +35,7 @@ export const ProductsAndServices: React.FC<ProductsAndServicesProps> = ({ onNavi
           setIsVisible(true);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -48,211 +46,102 @@ export const ProductsAndServices: React.FC<ProductsAndServicesProps> = ({ onNavi
 
   const handleCardClick = (id: string) => {
     if (onNavigate) {
-      if (id === 'core-banking') {
-        onNavigate('core-banking');
-      } else if (id === 'custom') {
-        onNavigate('custom');
-      }
+      if (id === 'core-banking') onNavigate('core-banking');
+      else if (id === 'custom') onNavigate('custom');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   return (
-    <section id="products" ref={sectionRef} className="relative z-30 py-24 bg-white overflow-hidden min-h-screen flex items-center">
+    <section id="products" ref={sectionRef} className="relative bg-white overflow-hidden pb-24">
       
-      {/* Background Decor */}
-      <div className="absolute inset-0 bg-slate-50/50 pointer-events-none"></div>
-      
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <div className="text-center max-w-4xl mx-auto mb-20">
-          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
-            What <span className="text-sky-600">We Do</span>
-          </h2>
-          <p className="text-lg text-slate-600">
-            Comprehensive technology solutions designed for the modern financial landscape.
-          </p>
+      {/* 1. TOP BANNER: Full-width Image with Dark Overlay */}
+      <div className="relative w-full h-[450px] md:h-[550px] flex items-center justify-center overflow-hidden">
+        <img 
+          src="https://i.ibb.co/7J5VTmTL/site.jpg" 
+          alt="Expertise Banner" 
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[10s] group-hover:scale-110"
+        />
+        {/* Dark Overlay with Fade */}
+        <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-[1px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-transparent to-white"></div>
+        
+        {/* Title Text Content */}
+        <div className="container relative z-10 mx-auto px-4 md:px-6 text-center">
+          <div className={`max-w-4xl mx-auto opacity-0 ${isVisible ? 'animate-slide-in-bottom' : ''}`}>
+             <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight drop-shadow-2xl">
+               Our <span className="text-sky-400">Core Expertise</span>
+             </h2>
+             <p className="text-xl md:text-2xl text-slate-100 max-w-2xl mx-auto leading-relaxed font-light drop-shadow-md">
+               Innovative financial technology tailored for growth and operational excellence.
+             </p>
+          </div>
         </div>
+      </div>
 
-        <div className="flex flex-wrap justify-center gap-10">
+      {/* 2. CONTAINERS: Service Cards Overlayed/Below */}
+      <div className="container relative z-20 mx-auto px-4 md:px-6 -mt-20 md:-mt-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
           {services.map((service, idx) => (
             <div 
-              key={idx} 
-              id={service.cardId}
-              className={`lenda-card opacity-0 ${isVisible ? service.direction : ''}`}
-              style={{ animationDelay: `${idx * 150}ms`, animationFillMode: 'forwards' }}
+              key={service.id}
+              className={`
+                group opacity-0 ${isVisible ? 'animate-slide-in-bottom' : ''} 
+                bg-white rounded-[2.5rem] p-8 md:p-12 
+                border-2 border-slate-200 shadow-2xl hover:border-sky-500 
+                transition-all duration-500 hover:-translate-y-2
+              `}
+              style={{ animationDelay: `${idx * 200 + 400}ms`, animationFillMode: 'forwards' }}
             >
-              {/* Image Section - Top of Card, 0 Margins */}
-              <div className="w-full h-56 relative overflow-hidden bg-slate-100">
-                <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors z-10"></div>
-                <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
+                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 ${service.id === 'core-banking' ? 'bg-sky-50 text-sky-600' : 'bg-purple-50 text-purple-600'}`}>
+                  {service.icon}
+                </div>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-400 group-hover:bg-sky-500 group-hover:text-white group-hover:border-sky-500 transition-all">
+                  <Zap size={14} className="animate-pulse" />
+                  {service.short} Module
+                </div>
               </div>
 
-              <div className="card_content p-8 flex flex-col flex-grow">
-                <div className="mb-4">
-                  <span className="card_title">{service.title}</span>
-                  <p className="card_paragraph mt-2">
-                    {service.desc}
-                  </p>
-                </div>
-                
-                <div className="mt-auto">
-                  <button className="animated-button" onClick={() => handleCardClick(service.id)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="arr-2" viewBox="0 0 24 24">
-                      <path
-                        d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
-                      ></path>
-                    </svg>
-                    <span className="text">Find Out More</span>
-                    <span className="circle"></span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="arr-1" viewBox="0 0 24 24">
-                      <path
-                        d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
-                      ></path>
-                    </svg>
-                  </button>
-                </div>
+              <h3 className="text-3xl font-bold text-slate-900 mb-4 group-hover:text-sky-600 transition-colors">
+                {service.title}
+              </h3>
+              
+              <p className="text-slate-600 text-lg leading-relaxed mb-8">
+                {service.desc}
+              </p>
+
+              <div className="space-y-3 mb-10">
+                {service.features.map((feature, i) => (
+                  <div key={i} className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+                    <span className="font-medium">{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex pt-4">
+                <button 
+                  onClick={() => handleCardClick(service.id)}
+                  className="lenda-button w-full sm:w-auto"
+                >
+                  <span>Explore {service.short} Solution</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 43">
+                    <polygon points="39.58,4.46 44.11,0 66,21.5 44.11,43 39.58,38.54 56.94,21.5"></polygon>
+                    <polygon points="19.79,4.46 24.32,0 46.21,21.5 24.32,43 19.79,38.54 37.15,21.5"></polygon>
+                    <polygon points="0,4.46 4.53,0 26.42,21.5 4.53,43 0,38.54 17.36,21.5"></polygon>
+                  </svg>
+                </button>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <style>{`
-        .lenda-card {
-          --white: #ffffff;
-          --black: #0f172a;
-          --paragraph: #475569;
-          --line: #0ea5e9; /* Sky Blue */
-          
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          gap: 0;
-          padding: 0; 
-          width: 100%;
-          max-width: 350px;
-          min-height: 480px; 
-          
-          background-color: var(--white);
-          
-          border-radius: 1rem;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          border: 1px solid #e2e8f0;
-          overflow: hidden; 
-        }
-
-        @media (min-width: 768px) {
-          .lenda-card {
-            max-width: 400px; 
-          }
-        }
-        
-        .lenda-card:hover {
-           transform: translateY(-8px);
-           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .lenda-card .card_title {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: var(--black);
-        }
-
-        .lenda-card .card_paragraph {
-          font-size: 1rem;
-          line-height: 1.6;
-          color: var(--paragraph);
-        }
-
-        /* Animated Button Styles */
-        .lenda-card .animated-button {
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 4px;
-          padding: 12px 36px;
-          border: 2px solid;
-          border-color: #0ea5e9; /* Sky 500 */
-          font-size: 14px;
-          background-color: #ffffff;
-          border-radius: 100px;
-          font-weight: 600;
-          color: #0284c7; /* Sky 600 */
-          cursor: pointer;
-          overflow: hidden;
-          transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-          width: 100%;
-        }
-
-        .lenda-card .animated-button svg {
-          position: absolute;
-          width: 24px;
-          fill: #0284c7;
-          z-index: 9;
-          transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .lenda-card .animated-button .arr-1 {
-          right: 16px;
-        }
-
-        .lenda-card .animated-button .arr-2 {
-          left: -25%;
-        }
-
-        .lenda-card .animated-button .circle {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 20px;
-          height: 20px;
-          background-color: #e0f2fe; /* Sky 100 */
-          border-radius: 50%;
-          opacity: 0;
-          transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .lenda-card .animated-button .text {
-          position: relative;
-          z-index: 1;
-          transform: translateX(-12px);
-          transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .lenda-card .animated-button:hover {
-          color: #0ea5e9;
-          border-color: #0ea5e9;
-        }
-
-        .lenda-card .animated-button:hover .arr-1 {
-          right: -25%;
-        }
-
-        .lenda-card .animated-button:hover .arr-2 {
-          left: 16px;
-        }
-
-        .lenda-card .animated-button:hover .text {
-          transform: translateX(12px);
-        }
-
-        .lenda-card .animated-button:hover svg {
-          fill: #0ea5e9;
-        }
-
-        .lenda-card .animated-button:active {
-          scale: 0.95;
-        }
-
-        .lenda-card .animated-button:hover .circle {
-          width: 220px;
-          height: 220px;
-          opacity: 1;
-        }
-      `}</style>
+      {/* Background decorative elements */}
+      <div className="absolute -z-10 bottom-0 left-0 w-1/2 h-1/2 bg-[radial-gradient(circle_at_30%_70%,#f0f9ff_0%,transparent_50%)] opacity-40"></div>
+      <div className="absolute -z-10 top-1/2 right-0 w-64 h-64 bg-purple-50 rounded-full blur-3xl opacity-30"></div>
+      
     </section>
   );
 };

@@ -89,13 +89,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onExplore }) => {
             <div className="relative animate-in slide-in-from-right-8 duration-1000 fade-in order-1 lg:order-2 w-full flex flex-col items-center justify-center lg:justify-end h-[500px] lg:h-auto">
                <div className="relative w-full max-w-lg animate-float z-20 mt-12">
                   <img 
-                    src="https://i.ibb.co/KcKmgLvS/HEROMAN.png" 
+                    src="https://i.ibb.co/fYHW4dyZ/hero.png" 
                     alt="Lenda Professional" 
                     className="w-full h-auto object-contain drop-shadow-2xl relative z-20" 
                   />
                   <div className="absolute left-0 w-full h-full pointer-events-none reflection-mask z-10" style={{ top: '95%' }}>
                     <img 
-                      src="https://i.ibb.co/KcKmgLvS/HEROMAN.png" 
+                      src="https://i.ibb.co/fYHW4dyZ/hero.png" 
                       alt="" 
                       className="w-full h-auto object-contain blur-[2px]" 
                     />
