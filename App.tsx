@@ -80,45 +80,89 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentView]);
 
-  // Dynamic SEO Title Switching
+  // Dynamic SEO Title & Meta Tag Switching
   useEffect(() => {
-    const baseTitle = "Lenda Technologies";
+    const updateMetaTags = (title: string, description: string) => {
+      document.title = title;
+      
+      // Update Meta Description
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', description);
+      
+      // Update OG Tags
+      let ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', title);
+      
+      let ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', description);
+    };
+
     switch (currentView) {
       case 'home':
-        document.title = `${baseTitle} | #1 Core Banking & Microfinance Software in Zimbabwe`;
+        updateMetaTags(
+          "Core Banking Software Zimbabwe – Lendatech",
+          "Transform your business with scalable core banking & microfinance software. Trusted Zimbabwe digital banking solutions."
+        );
         break;
       case 'about':
-        document.title = `About Us | ${baseTitle} - Premier Software Developers`;
+        updateMetaTags(
+          "About Us | Lendatech - Premier Software Developers",
+          "Learn about Lenda Technologies, the digital architects of Africa's financial evolution based in Masvingo, Zimbabwe."
+        );
         break;
       case 'contact':
-        document.title = `Contact Us | ${baseTitle} - Support & Inquiries`;
+        updateMetaTags(
+          "Contact Us | Lenda Technologies - Support & Inquiries",
+          "Get in touch with Lenda Technologies in Masvingo. We offer 24/7 support for our banking and microfinance software solutions."
+        );
         break;
       case 'quote':
-        document.title = `Get a Quote | ${baseTitle} - Tailored Financial Software Pricing`;
+        updateMetaTags(
+          "Get a Quote | Lenda Technologies - Tailored Financial Software",
+          "Request a custom proposal for core banking systems, SSB platforms, and AI chatbots tailored for the Zimbabwean market."
+        );
         break;
       case 'core-banking':
-        document.title = `Core Banking System (LMS) | ${baseTitle} - Secure & Multi-Currency`;
+        updateMetaTags(
+          "Core Banking System (LMS) | Lenda Technologies",
+          "A robust, multi-currency Core Banking System (LMS) designed for African Microfinance Institutions and SACCOs. Secure and compliant."
+        );
         break;
       case 'ssb':
-        document.title = `SSB Deductions Platform | ${baseTitle} - Automated Stop Orders`;
+        updateMetaTags(
+          "SSB Deductions Platform | Lenda Technologies",
+          "Automate and secure civil servant loan deductions in Zimbabwe with our SSB Deductions Platform. Guaranteed collections."
+        );
         break;
       case 'custom':
-        document.title = `Custom Software Development | ${baseTitle} - Masvingo & Harare`;
+        updateMetaTags(
+          "Custom Software Development Zimbabwe | Lenda Technologies",
+          "Tailor-made software, AI chatbots, and system integrations built specifically for your unique operational challenges in Zimbabwe."
+        );
         break;
       case 'chatbots':
-        document.title = `AI Chatbots & Automation | ${baseTitle} - WhatsApp & Web`;
+        updateMetaTags(
+          "AI Chatbots & Automation | Lenda Technologies",
+          "Automate your customer interactions on WhatsApp and the Web with intelligent AI chatbots for Zimbabwean businesses."
+        );
         break;
       case 'integration':
-        document.title = `System Integration | ${baseTitle} - Payments & API`;
+        updateMetaTags(
+          "System Integration & API | Lenda Technologies",
+          "Connecting EcoCash, Paynow, and banking APIs to your core systems for seamless financial operations in Zimbabwe."
+        );
         break;
       case 'blog':
-        document.title = `Latest News & Insights | ${baseTitle}`;
+        updateMetaTags(
+          "Lenda Insights - Fintech News & Trends Zimbabwe",
+          "Stay updated with the latest trends in fintech, microfinance technology, and company news from Lenda Technologies."
+        );
         break;
       case 'admin':
-        document.title = `Admin Portal | ${baseTitle}`;
+        updateMetaTags("Admin Portal | Lenda Technologies", "Internal management dashboard.");
         break;
       default:
-        document.title = baseTitle;
+        document.title = "Lenda Technologies";
     }
   }, [currentView]);
 

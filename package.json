@@ -1,12 +1,13 @@
 {
-  "name": "lenda-technologies",
-  "private": true,
+  "name": "lendatech-website",
   "version": "1.0.0",
+  "description": "Lenda Technologies - Core Banking Software Zimbabwe",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "npm run generate:sitemap && vite build",
+    "preview": "vite preview",
+    "generate:sitemap": "node generate-sitemap-advanced.js"
   },
   "dependencies": {
     "@google/genai": "*",

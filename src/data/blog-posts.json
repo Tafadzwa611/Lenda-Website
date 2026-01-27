@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "slug": "core-banking-guide-zimbabwe-2026",
+    "title": "Complete Guide to Core Banking Systems in Zimbabwe 2026",
+    "excerpt": "Everything you need to know about implementing core banking software for microfinance institutions in Zimbabwe.",
+    "publishedDate": "2026-01-15",
+    "author": "Lenda Technologies",
+    "category": "Core Banking"
+  },
+  {
+    "id": "2",
+    "slug": "ssb-deductions-civil-servants-zimbabwe",
+    "title": "How SSB Deductions Work for Civil Servants in Zimbabwe",
+    "excerpt": "A comprehensive guide to automated salary deductions through the SSB platform for loan recovery.",
+    "publishedDate": "2026-01-20",
+    "author": "Lenda Technologies",
+    "category": "SSB Platform"
+  },
+  {
+    "id": "3",
+    "slug": "ai-chatbots-customer-service-zimbabwe",
+    "title": "Transforming Customer Service with AI Chatbots in Zimbabwe",
+    "excerpt": "How Zimbabwean businesses are leveraging WhatsApp AI chatbots to improve customer engagement.",
+    "publishedDate": "2026-01-25",
+    "author": "Lenda Technologies",
+    "category": "AI & Automation"
+  }
+]
